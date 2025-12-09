@@ -25,6 +25,7 @@ function App() {
   const [showAddFriend, setshowAddFriend] = useState(false);
   const [friends, setFriends] = useState(initialFriends)
   const [selectedFriend, setSelectedFriend] = useState(null);
+
   function handleShowAddFriend() {
     setshowAddFriend((show) => !show)
     setSelectedFriend(null)
@@ -54,15 +55,19 @@ function App() {
 
       <Button onClick={handleShowAddFriend}>{showAddFriend ? "Close" : "Add friend"}</Button>
     </div>
-    {selectedFriend && <FormSplitBill selectedFriend={selectedFriend} onSplitBill={handleSplitBill}></FormSplitBill>}
+    {selectedFriend && <FormSplitBill selectedFriend={selectedFriend} onSplitBill={handleSplitBill} key={selectedFriend.id}></FormSplitBill>}
   </div>
 }
+
+
 
 function FriendList({ friends, onSelection, selectedFriend }) {
 
   return <ul>
     {friends.map(friend => <Friend friend={friend} key={friend.id} onSelection={onSelection} selectedFriend={selectedFriend}></Friend>)}</ul>
 }
+
+
 
 function Friend({ friend, onSelection, selectedFriend }) {
   const isSelected = selectedFriend?.id === friend.id;
@@ -88,11 +93,14 @@ function Friend({ friend, onSelection, selectedFriend }) {
   </li>);
 }
 
+
+
 function Button({ children, onClick }) {
   return (
     <button className='button' onClick={onClick}>{children}</button>
   )
 }
+
 
 function FormAddFriend({ onAddFriend }) {
   const [name, setName] = useState("")
@@ -119,6 +127,7 @@ function FormAddFriend({ onAddFriend }) {
     </form>
   )
 }
+
 
 function FormSplitBill({ selectedFriend, onSplitBill }) {
   const [bill, setBill] = useState("");
